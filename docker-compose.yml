@@ -5,6 +5,24 @@ services:
     container_name: gatling-kafka
     image: hseeberger/scala-sbt:8u265_1.4.4_2.12.12
     hostname: gatling-kafka
+    volumes:
+      - .:/opt/apps
+    entrypoint:
+      - bash 
+      - -c
+      - |
+        mkdir /opt/apps/tmp && \
+        cd /opt/apps/tmp && \
+        git clone --depth 1 --branch 3.3 https://github.com/gatling/gatling.git && \
+        git clone --depth 1 https://github.com/mnogu/gatling-kafka.git && \
+        cd gatling && \
+        sbt compile && \
+        sbt test && \
+        sbt publishLocal publishM2 && \
+        find ~/.ivy2/local/io.gatling/ -name "*.jar"
+
+        #cd ../gatling-kafka && \
+        #sbt assembly && \
 
 networks:
   practice-gatling-kafka:
