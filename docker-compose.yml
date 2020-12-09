@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  gatling-kafka:
+    container_name: gatling-kafka
+    image: hseeberger/scala-sbt:8u265_1.4.4_2.12.12
+    hostname: gatling-kafka
+
+networks:
+  practice-gatling-kafka:
+    driver: bridge
